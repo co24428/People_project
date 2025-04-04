@@ -80,9 +80,23 @@
 
 ### DIY 7
 1. Update the function from exercise 6 and to advance filter data from db.
-2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all persons
-with salary above 1000
-3. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to
-the query that retrieve all persons with salary below 1000
-4. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to
-the query that retrieve all persons with salary between 1000 to 2000
+     - ***getAllPeople()*** in personController.js
+2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all persons with salary above 1000
+     ```
+     % curl "http://localhost:3000/api/v1/people?salary_gt=80000"
+     {"status":"success","data":[{"_id":"67edec2e3512d00490300589","firstName":"Yihwan","familyName":"Kim","city":"Vancouver","country":"Canada","salary":100000},{"_id":"67edf4403512d0049030058a","firstName":"Emily","familyName":"Wong","city":"Toronto","country":"Canada","salary":85000},{"_id":"67edf4403512d0049030058c","firstName":"Ava","familyName":"Smith","city":"New York","country":"USA","salary":92000}]}
+     ```
+3. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to the query that retrieve all persons with salary below 1000
+     ```
+     % curl "http://localhost:3000/api/v1/people?salary_lt=100000"
+     {"status":"success","data":[{"_id":"67edf4403512d0049030058a","firstName":"Emily","familyName":"Wong","city":"Toronto","country":"Canada","salary":85000},{"_id":"67edf4403512d0049030058b","firstName":"Carlos","familyName":"Ramirez","city":"Mexico City","country":"Mexico","salary":75000},{"_id":"67edf4403512d0049030058c","firstName":"Ava","familyName":"Smith","city":"New York","country":"USA","salary":92000},{"_id":"67ef1ef633fe304b88350124","firstName":"Ian","familyName":"Park","city":"Vancouver","country":"Canada","salary":10000,"__v":0}]}
+     ```
+4. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to the query that retrieve all persons with salary between 1000 to 2000
+     ```
+     % curl "http://localhost:3000/api/v1/people?salary_gt=80000&salary_lt=90000"
+     {"status":"success","data":[{"_id":"67edf4403512d0049030058a","firstName":"Emily","familyName":"Wong","city":"Toronto","country":"Canada","salary":85000}]}
+     ```
+
+### DIY 8
+1. Update the function from exercise 6 and to and add the option to sort.
+2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all persons sorting according to salary

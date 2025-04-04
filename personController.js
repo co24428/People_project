@@ -14,9 +14,24 @@ exports.getAllPeople = async (req, res) => {
 
         if (req.query.firstName) filters.firstName = req.query.firstName;
         if (req.query.familyName) filters.familyName = req.query.familyName;
-        if (req.query.salary) filters.salary = Number(req.query.salary);
         if (req.query.city) filters.city = req.query.city;
         if (req.query.country) filters.country = req.query.country;
+
+        // Exact match for salary
+        if (req.query.salary) filters.salary = Number(req.query.salary);
+
+        // Advanced salary filtering
+        // salary_gt, salary_gte, salary_lt, salary_lte
+        const salaryFilter = {};
+        if (req.query.salary_gt) salaryFilter.$gt = Number(req.query.salary_gt);
+        if (req.query.salary_gte) salaryFilter.$gte = Number(req.query.salary_gte);
+        if (req.query.salary_lt) salaryFilter.$lt = Number(req.query.salary_lt);
+        if (req.query.salary_lte) salaryFilter.$lte = Number(req.query.salary_lte);
+
+        // Merge if no exact salary query
+        if (!req.query.salary && Object.keys(salaryFilter).length > 0) {
+            filters.salary = salaryFilter;
+        }
 
         const people = await Person.find(filters);
         generateLog(res, 200, "success", null, people);
