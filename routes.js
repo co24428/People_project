@@ -1,14 +1,11 @@
-const express = require("express");
-const PeopleController = require("./personController");
+const express = require('express');
+const personController = require("./personController");
 
 const router = express.Router();
 
-// add to base url in app.js -> "/api/v1/toys"
+// add to base url in app.js -> "/api/v1/people"
 // http://localhost:3000/api/v1/people
-router.get("/", PeopleController.getAllPeople);
-// router.get("/:id", ToyController.getToysbyID);
-// router.post("/", ToyController.addNewToy);
-// router.patch("/:id", ToyController.updateToy);
-// router.delete("/:id", ToyController.deleteToy);
+router.get('/', personController.getAllPeople);
+router.post('/add-person', personController.addPerson);
 
 module.exports = router;

@@ -1,16 +1,22 @@
 const express = require("express");
-// const playerRoutes = require("./routes/playerRoutes");
-const peopleRoutes = require("./routes");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const routes = require("./routes");
+const configs = require("./config.js");
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.set('view engine', 'ejs');
+app.set(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.use("/assets", express.static(__dirname + "/public"));
+app.use("/api/v1/people", routes);
 
-// Register toyRoutes under base URL "/api/v1/people"
-app.use("/api/v1/people", peopleRoutes);
+mongoose.connect(configs.mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 app.listen(port, () => {
     console.log(`Server is running: http://localhost:${port}`);
