@@ -1,4 +1,4 @@
-# People Project
+# People Project [🐱Git](https://github.com/co24428/People_project)
 - MVC structure
 - MongoDB with Mongoose (built in persnal Docker container)
 - Frontend with ejs library using API call
