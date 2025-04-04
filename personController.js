@@ -29,3 +29,40 @@ exports.addPerson = async (req, res) => {
         generateLog(res, 500, "error", "Failed to add new person");
     }
 };
+
+// GET: Fetch a person by ID
+exports.getPersonById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const person = await Person.findById(id);
+        if (!person) {
+            return generateLog(res, 404, "error", "Person not found");
+        }
+        generateLog(res, 200, "success", null, person);
+    } catch (err) {
+        generateLog(res, 500, "error", "Failed to fetch person");
+    }
+};
+
+//UPDATE: Update a person's salary by ID
+exports.updateSalaryById = async (req, res) => {
+    const { id } = req.params;
+    const { salary } = req.body;
+
+    try {
+        const person = await Person.findByIdAndUpdate(
+            id,
+            { salary },
+            { new: true } // return updated document
+        );
+
+        if (!person) {
+            return generateLog(res, 404, "error", "Person not found");
+        }
+
+        generateLog(res, 200, "success", "Salary updated", person);
+    } catch (err) {
+        generateLog(res, 500, "error", "Failed to update salary");
+    }
+};

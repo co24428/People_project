@@ -7,5 +7,7 @@ const router = express.Router();
 // http://localhost:3000/api/v1/people
 router.get('/', personController.getAllPeople);
 router.post('/add-person', personController.addPerson);
+router.get('/find/:id', personController.getPersonById);
+router.patch('/updateSalary/:id', personController.updateSalaryById);
 
 module.exports = router;
