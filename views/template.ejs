@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>People List (Client-Fetch)</title>
+</head>
+<body>
+  <h1>People List (Loaded via API)</h1>
+  <ul id="people-list"></ul>
+
+  <script>
+    fetch('/api/v1/people')
+      .then(res => res.json())
+      .then(result => {
+        const people = result.data;
+        const list = document.getElementById('people-list');
+
+        people.forEach(p => {
+          const item = document.createElement('li');
+          item.textContent = `${p.firstName} ${p.familyName} from ${p.city}, ${p.country} - $${p.salary}`;
+          list.appendChild(item);
+        });
+      })
+      .catch(err => console.error('Failed to load people:', err));
+  </script>
+</body>
+</html>

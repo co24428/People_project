@@ -6,7 +6,7 @@
      - **db**: 'Webapp', **collection**: 'People'
 3. Add a new function that insert person to db
      ```shell
-     curl -X POST http://localhost:3000/api/v1/people/add-person \
+     curl -X POST http://localhost:3000/api/v1/people/addPerson \
      -H "Content-Type: application/json" \
      -d '{
      "firstName": "Ian",
