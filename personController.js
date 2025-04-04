@@ -33,7 +33,11 @@ exports.getAllPeople = async (req, res) => {
             filters.salary = salaryFilter;
         }
 
-        const people = await Person.find(filters);
+        // Handle sorting
+        let sort = {};
+        if (req.query.sort) sort = req.query.sort.split(',').join(' ');
+
+        const people = await Person.find(filters).sort(sort);
         generateLog(res, 200, "success", null, people);
     } catch (err) {
         generateLog(res, 500, "error", "Failed to fetch people");
@@ -94,5 +98,31 @@ exports.deletePersonById = async (req, res) => {
         generateLog(res, 200, "success", "Person deleted successfully", person);
     } catch (err) {
         generateLog(res, 500, "error", "Failed to delete person");
+    }
+};
+
+exports.getStatistics = async (req, res) => {
+    try {
+        // predefined aggregate operator: $avg, $min, $max (and $sum, ...)
+        const stats = await Person.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    averageSalary: { $avg: "$salary" },
+                    minSalary: { $min: "$salary" },
+                    maxSalary: { $max: "$salary" }
+                }
+            }
+        ]);
+        if (stats.length === 0) return generateLog(res, 404, "error", "No data found");
+
+        const result = {
+            averageSalary: Math.round(stats[0].averageSalary),
+            minSalary: stats[0].minSalary,
+            maxSalary: stats[0].maxSalary
+        };
+        generateLog(res, 200, "success", null, result);
+    } catch (err) {
+        generateLog(res, 500, "error", "Failed to calculate statistics");
     }
 };

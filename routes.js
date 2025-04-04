@@ -10,5 +10,6 @@ router.post('/add-person', personController.addPerson);
 router.get('/find/:id', personController.getPersonById);
 router.patch('/updateSalary/:id', personController.updateSalaryById);
 router.delete('/delete/:id', personController.deletePersonById);
+router.get('/statistic', personController.getStatistics);
 
 module.exports = router;
