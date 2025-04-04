@@ -36,9 +36,7 @@ exports.getPersonById = async (req, res) => {
 
     try {
         const person = await Person.findById(id);
-        if (!person) {
-            return generateLog(res, 404, "error", "Person not found");
-        }
+        if (!person) return generateLog(res, 404, "error", "Person not found");
         generateLog(res, 200, "success", null, person);
     } catch (err) {
         generateLog(res, 500, "error", "Failed to fetch person");
@@ -56,13 +54,22 @@ exports.updateSalaryById = async (req, res) => {
             { salary },
             { new: true } // return updated document
         );
-
-        if (!person) {
-            return generateLog(res, 404, "error", "Person not found");
-        }
-
+        if (!person) return generateLog(res, 404, "error", "Person not found");
         generateLog(res, 200, "success", "Salary updated", person);
     } catch (err) {
         generateLog(res, 500, "error", "Failed to update salary");
+    }
+};
+
+// DELETE: Delete a person by ID
+exports.deletePersonById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const person = await Person.findByIdAndDelete(id);
+        if (!person) return generateLog(res, 404, "error", "Person not found");
+        generateLog(res, 200, "success", "Person deleted successfully", person);
+    } catch (err) {
+        generateLog(res, 500, "error", "Failed to delete person");
     }
 };
