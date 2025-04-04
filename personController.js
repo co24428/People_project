@@ -10,7 +10,15 @@ function generateLog(res, code, status, message = null, data = null) {
 // GET: Fetch all people
 exports.getAllPeople = async (req, res) => {
     try {
-        const people = await Person.find();
+        const filters = {};
+
+        if (req.query.firstName) filters.firstName = req.query.firstName;
+        if (req.query.familyName) filters.familyName = req.query.familyName;
+        if (req.query.salary) filters.salary = Number(req.query.salary);
+        if (req.query.city) filters.city = req.query.city;
+        if (req.query.country) filters.country = req.query.country;
+
+        const people = await Person.find(filters);
         generateLog(res, 200, "success", null, people);
     } catch (err) {
         generateLog(res, 500, "error", "Failed to fetch people");

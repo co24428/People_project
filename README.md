@@ -57,8 +57,7 @@
 ### DIY 5
 1. Add a new function to app.js to delete person by _id
      - ***deletePersonById()*** in personController.js
-2. Rerun the application and navigate to localhost:3000/api/v1/products/_ _ _ _ _ _ _ _ _ _ (select
-an id and run from postman delete request and delete the selected person)
+2. Rerun the application and navigate to localhost:3000/api/v1/products/_ _ _ _ _ _ _ _ _ _ (select an id and run from postman delete request and delete the selected person)
      ```
      % curl -X DELETE http://localhost:3000/api/v1/products/67ef1f219f1570e0662f660f \
      -H "Content-Type: application/json" \
@@ -68,7 +67,22 @@ an id and run from postman delete request and delete the selected person)
 ### DIY 6
 1. Update the function from exercise 2 and to filter data from db.
      - ***getAllPeople()*** in personController.js
-2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all person
-with salary 1000
-3. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all person
-with salary firstname Mike
+2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all person with salary 1000
+     ```
+     % curl -X GET 'http://localhost:3000/api/v1/people?salary=100000'
+     {"status":"success","data":[{"_id":"67edec2e3512d00490300589","firstName":"Yihwan","familyName":"Kim","city":"Vancouver","country":"Canada","salary":100000}]}
+     ```
+3. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all person with salary firstname Mike
+     ```
+     % curl -X GET 'http://localhost:3000/api/v1/people?firstName=Ian'   
+     {"status":"success","data":[{"_id":"67ef1ef633fe304b88350124","firstName":"Ian","familyName":"Park","city":"Vancouver","country":"Canada","salary":10000,"__v":0}]}
+     ```
+
+### DIY 7
+1. Update the function from exercise 6 and to advance filter data from db.
+2. Rerun the application and navigate to localhost:3000/api/v1/persons/ and retrieve all persons
+with salary above 1000
+3. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to
+the query that retrieve all persons with salary below 1000
+4. Rerun the application and navigate to localhost:3000/api/v1/persons/ and add parameters to
+the query that retrieve all persons with salary between 1000 to 2000
